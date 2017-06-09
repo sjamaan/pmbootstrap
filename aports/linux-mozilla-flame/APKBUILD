@@ -32,6 +32,8 @@ source="
 	$pkgname-$_hash.zip::https://github.com/mozilla-b2g/codeaurora_kernel_msm/archive/${_hash}.zip
 	$_config
 	compiler-gcc6.h
+        gpu-msm-fix-gcc5-compile.patch
+        aeea3592a13bf12861943e44fc48f1f270941f8d.patch
 "
 subpackages=""
 license="GPL2"
@@ -88,7 +90,7 @@ build() {
 	cd "$srcdir"/build
 	unset LDFLAGS
 	make ARCH="$_carch" CC="${CC:-gcc}" \
-		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-Alpine" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-Alpine" CONFIG_NO_ERROR_ON_MISMATCH=y \
 		|| return 1
 }
 
@@ -101,5 +103,7 @@ package() {
 }
 
 sha512sums="03532b82159d31e406594203f318f78aace500f997325149d161e1691c93c3bc54e903602d54d52dc8fbfe370828da3442f06f4a78b84b8370fa0ef5d9a05bef  linux-mozilla-flame-03396c93577aafae7ca3603de1c74eafd30e7d54.zip
-a2e2e80e88caca2ff1d773340a20272b90162abea154a1de6dbeb66c8376c0cb5064160c90d6ef36bd1f3f13cd6994326c20af3bb269001fe3b9d468ec7c39cf  config-mozilla-flame.armhf
-d80980e9474c82ba0ef1a6903b434d8bd1b092c40367ba543e72d2c119301c8b2d05265740e4104ca1ac5d15f6c4aa49e8776cb44264a9a28dc551e0d1850dcc  compiler-gcc6.h"
+7b647f808568ddbcaf0df3f57639c54791b111ac2102d04e7e54f4f6441bb8338b268bad33a2a1fb9714d57de0aab5f753a70b720af027b008b071afca5a8275  config-mozilla-flame.armhf
+d80980e9474c82ba0ef1a6903b434d8bd1b092c40367ba543e72d2c119301c8b2d05265740e4104ca1ac5d15f6c4aa49e8776cb44264a9a28dc551e0d1850dcc  compiler-gcc6.h
+7be03a9e78b7ac330a54b1f00509caa0621a95c0c55901878ad757f9dd69cc05ba2c8b5ea987063ae1224f92c4d090d515fa5d369e7755181a4871b0d0f82881  gpu-msm-fix-gcc5-compile.patch
+ea1d3b5a234fa565e3c1a792de48f4fc4e6023d281d303c8e319c7ef28edc5739ab0e4dea0139a41f0a5c7d03e27921ccaa214fd0ac5c72245a094ce60128864  aeea3592a13bf12861943e44fc48f1f270941f8d.patch"
