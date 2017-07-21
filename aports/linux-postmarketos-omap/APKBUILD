@@ -95,17 +95,11 @@ build() {
 package() {
 	cd "$srcdir/build/arch/arm/boot"
 	
-	cat zImage dts/omap3-n900.dtb > zImage-dtb
-	mkimage -A arm -O linux -T kernel -C none -a 80008000 -e 80008000 -n postmarketos -d zImage-dtb uImage
+	install -Dm644 "$srcdir/build/arch/arm/boot/zImage" \
+		"$pkgdir/boot/zImage-$_flavor"
 
-	install -Dm644 "$srcdir/build/arch/arm/boot/uImage" \
-		"$pkgdir/boot/uImage-$_flavor"
-
-	install -Dm644 "$srcdir/build/arch/arm/boot/zImage-dtb" \
-		"$pkgdir/boot/vmlinuz-$_flavor"
-
-	install -Dm644 "$srcdir/build/arch/arm/boot/dts/omap3-n900.dtb" \
-		"$pkgdir/boot/omap3-n900.dtb"
+	mkdir -p "$pkgdir/usr/share/dtb/"
+	cp -v "$srcdir/build/arch/arm/boot/dts"/*.dtb "$pkgdir/usr/share/dtb/"
 
 	install -D "$srcdir/build/include/config/kernel.release" \
 		"$pkgdir/usr/share/kernel/$_flavor/kernel.release"
@@ -117,5 +111,3 @@ package() {
 		|| return 1
 }
 
-sha512sums="292ca975da27d9ec7dd96d5dd1df0208e88c53c4bf20608ad383148c2b7d331c2fe41b129b5b7e72564259a1fcaabf84b860a435e406528a4882b7a3e7412573  linux-4.12.3.tar.xz
-1a9fc469806b44c9ca4355a9f1ff9cc07c282793bf9bd022acfda26361a51233d9f1ddd14c7f439a13dab28a17b039fa229135aa2c5319e4cc0df1d2d0a14dca  config-nokia-rx51.armhf"
