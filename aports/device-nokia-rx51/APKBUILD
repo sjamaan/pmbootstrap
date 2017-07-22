@@ -5,7 +5,7 @@ pkgdesc="Nokia N900"
 url="https://github.com/postmarketOS"
 arch="noarch"
 license="MIT"
-depends="linux-postmarketos-omap uboot-tools linux-firmware"
+depends="linux-postmarketos uboot-tools linux-firmware"
 makedepends="uboot-tools"
 install="$pkgname.post-install"
 subpackages=""
@@ -33,10 +33,3 @@ package() {
                 "$pkgdir"/etc/acpi.map
 }
 
-sha512sums="d8950025dc1f4c9de9da72fe363e3dc34ae6c18ecbb77a1e60d61456b6f181f7867cf4848ecf457de6fc8651bff052d823a120eea14e9facb6daadbd5d6195c9  deviceinfo
-36fdcdc32e75ad82402d7f8dc6ec5879002513b3552ae4cf755df52f2c3df7b12c3ab0aae8ea8207a7fa22240b88f8098fd283298d08f923f9b07b7964289b83  uboot-script.cmd
-3d55e34b95791636e44a5f41754f3d0de039dbba41f7a556d43a95c9e64afcfa930046b4b96b40020b6f196096ffba93514682927e32fa4488686fdd19c6da5a  backlight-enable.sh
-98c554a709d6e8da5835bd792d833355d830fca1cfea12ec7fe4f41d1d1126389c51a8a392a7f94093473c19263cc6846cc40d7e179c2facf12db2d68ff923f9  90-touchscreen-dev.rules
-df5dcae9a32d04ba2fed8b4dbb8722f8d56d063a288dfbaeca37806bdbb8ba4de639b392859b9f24040a1032456d5dcd754f51314e3ab66515b91ae1e03c93a7  acpi_handler.sh
-7761aec6e6e219245b006e7bdc1d19812e9c5915cf3e64bb3dd46bb4b5570c1715650b53a1fc1007cb814076b5d81be0a66ba7ebf06d9a1fa4e364725c3ee633  acpi.map
-fd148b38a187710c9ed8729b6a5be5fcdb066c08c187cd11a783798fcb5b662e5fbff57c09031964b54c22bab5c0d407732bc9440d23865a77d0081ab5cdffd9  device-nokia-rx51.post-install"
