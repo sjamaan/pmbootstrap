@@ -1,0 +1,27 @@
+pkgname=device-samsung-g800f
+pkgver=1
+pkgrel=1
+pkgdesc="Samsung Galaxy S5 mini"
+url="https://github.com/postmarketOS"
+arch="noarch"
+license="MIT"
+depends="linux-samsung-g800f"
+makedepends=""
+install=""
+subpackages=""
+source="deviceinfo 90-android.rules"
+options="!check"
+
+build() {
+	return 0
+}
+
+package() {
+	install -D -m644 "$srcdir/deviceinfo" \
+		"$pkgdir/etc/deviceinfo"
+	install -D -m644 "$srcdir"/90-android.rules \
+		"$pkgdir"/etc/udev/rules.d/90-android.rules
+}
+
+sha512sums="11523208c5155de7b2cfded1d9762d93c4c509f74eef768d15dfa5966322c399395a3956f8c016a2786146602cfc87f169ce6e9cd644b6b7e43448f677f117d3  deviceinfo
+8aead706ddb118a44de7d049f07d10a27e727d17724058d132e4ec4fa73fed29c9ccfe03f02aca459c922ec0fbba24e171fe3c76e33f7c5462631e3dd5506e36  90-android.rules"

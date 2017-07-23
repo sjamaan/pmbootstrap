@@ -1,0 +1,22 @@
+This fixes the following error:
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/kernel/trace/trace_output.c: In function 'trace_graph_ret_raw':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/kernel/trace/trace_output.c:1088:2: error: this 'if' clause does not guard... [-Werror=misleading-indentation]
+  if (!trace_seq_printf(&iter->seq, "%lx %lld %lld %ld %d\n",
+  ^~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/kernel/trace/trace_output.c:1094:3: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'if'
+   return TRACE_TYPE_PARTIAL_LINE;
+   ^~~~~~
+cc1: all warnings being treated as errors
+
+--- a/kernel/trace/trace_output.c
++++ b/kernel/trace/trace_output.c
+@@ -1090,7 +1090,7 @@ static enum print_line_t trace_graph_ret_raw(struct trace_iterator *iter, int fl
+ 			      field->ret.calltime,
+ 			      field->ret.rettime,
+ 			      field->ret.overrun,
+-			      field->ret.depth));
++			      field->ret.depth))
+ 		return TRACE_TYPE_PARTIAL_LINE;
+ 
+ 	return TRACE_TYPE_HANDLED;

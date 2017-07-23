@@ -1,0 +1,26 @@
+This gets rid of these warnings/errors:
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/fs/namespace.c: In function 'sys_mount':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/fs/namespace.c:2447:6: error: 'kernel_dev' may be used uninitialized in this function [-Werror=maybe-uninitialized]
+  ret = do_mount(kernel_dev, kernel_dir, kernel_type, flags,
+  ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   (void *) data_page);
+   ~~~~~~~~~~~~~~~~~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/fs/namespace.c:2447:6: error: 'kernel_type' may be used uninitialized in this function [-Werror=maybe-uninitialized]
+cc1: all warnings being treated as errors
+
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2421,9 +2421,9 @@ SYSCALL_DEFINE5(mount, char __user *, dev_name, char __user *, dir_name,
+ 		char __user *, type, unsigned long, flags, void __user *, data)
+ {
+ 	int ret;
+-	char *kernel_type;
+-	char *kernel_dir;
+-	char *kernel_dev;
++	char *kernel_type = NULL;
++	char *kernel_dir = NULL;
++	char *kernel_dev = NULL;
+ 	unsigned long data_page;
+ 
+ 	ret = copy_mount_string(type, &kernel_type);

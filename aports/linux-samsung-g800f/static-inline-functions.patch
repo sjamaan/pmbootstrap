@@ -1,0 +1,126 @@
+This fixes the following warning/error:
+
+In file included from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/stddef.h:4:0,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/posix_types.h:4,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/types.h:17,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/thread_info.h:10,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/preempt.h:9,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/spinlock.h:50,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/mmzone.h:7,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/gfp.h:4,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/mm.h:8,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/mm/rmap.c:45:
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/mm/rmap.c:622:15: error: 'is_vm_hugetlb_page' is static but used in inline function 'vma_address' which is not static [-Werror]
+  if (unlikely(is_vm_hugetlb_page(vma)))
+               ^
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/compiler.h:147:42: note: in definition of macro 'unlikely'
+ # define unlikely(x) __builtin_expect(!!(x), 0)
+                                          ^
+cc1: all warnings being treated as errors
+
+And
+
+
+In file included from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/kernel.h:22:0,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/clk.h:15,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/fingerprint.h:22,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/vfs61xx.c:21:
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/printk.h:202:2: error: 'no_printk' is static but used in inline function 'vfsspi_readSync' which is not static [-Werror]
+  no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+  ^
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/vfs61xx.c:403:2: note: in expansion of macro 'pr_debug'
+  pr_debug("%s length=%d\n",
+  ^~~~~~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/printk.h:202:2: error: 'no_printk' is static but used in inline function 'vfsspi_readSync' which is not static [-Werror]
+  no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+  ^
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/vfs61xx.c:395:3: note: in expansion of macro 'pr_debug'
+   pr_debug("%s: m.actual_length=%d\n",
+   ^~~~~~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/printk.h:202:2: error: 'no_printk' is static but used in inline function 'vfsspi_readSync' which is not static [-Werror]
+  no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+  ^
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/vfs61xx.c:393:2: note: in expansion of macro 'pr_debug'
+  pr_debug("%s: status=%d\n", __func__, status);
+  ^~~~~~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/vfs61xx.c:389:2: error: 'spi_message_add_tail' is static but used in inline function 'vfsspi_readSync' which is not static [-Werror]
+  spi_message_add_tail(&t, &m);
+  ^~~~~~~~~~~~~~~~~~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/vfs61xx.c:381:2: error: 'spi_message_init' is static but used in inline function 'vfsspi_readSync' which is not static [-Werror]
+  spi_message_init(&m);
+  ^~~~~~~~~~~~~~~~
+In file included from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/kernel.h:22:0,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/clk.h:15,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/fingerprint.h:22,
+                 from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/vfs61xx.c:21:
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/linux/printk.h:202:2: error: 'no_printk' is static but used in inline function 'vfsspi_readSync' which is not static [-Werror]
+  no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+  ^
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/fingerprint/vfs61xx.c:379:2: note: in expansion of macro 'pr_debug'
+  pr_debug("%s\n", __func__);
+  ^~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/media/video/exynos/fimc-is/fimc-is-clk-gate.c:107:6: error: 'test_bit' is static but used in inline function 'fimc_is_group_otf' which is not static [-Werror]
+  if (test_bit(FIMC_IS_GROUP_OTF_INPUT, &group->state))
+      ^~~~~~~~
+cc1: all warnings being treated as errors
+
+
+
+--- a/drivers/fingerprint/vfs61xx.c
++++ b/drivers/fingerprint/vfs61xx.c
+@@ -314,7 +314,7 @@ static inline ssize_t vfsspi_writeSync(struct vfsspi_devData *vfsSpiDev,
+ #define SPI_TRANS_ARRAY (10)
+ 
+ /* Return no.of bytes read >0. negative integer incase of error. */
+-inline ssize_t vfsspi_readSync(struct vfsspi_devData *vfsSpiDev,
++static inline ssize_t vfsspi_readSync(struct vfsspi_devData *vfsSpiDev,
+ 	unsigned char *buf, size_t len)
+ {
+ 	int status = 0;
+@@ -369,7 +369,7 @@ overflow:
+ 	return status;
+ }
+ #else
+-inline ssize_t vfsspi_readSync(struct vfsspi_devData *vfsSpiDev,
++static inline ssize_t vfsspi_readSync(struct vfsspi_devData *vfsSpiDev,
+ 	unsigned char *buf, size_t len)
+ {
+ 	int status = 0;
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -613,7 +613,7 @@ void page_unlock_anon_vma(struct anon_vma *anon_vma)
+  * Returns virtual address or -EFAULT if page's index/offset is not
+  * within the range mapped the @vma.
+  */
+-inline unsigned long
++static inline unsigned long
+ vma_address(struct page *page, struct vm_area_struct *vma)
+ {
+ 	pgoff_t pgoff = page->index << (PAGE_CACHE_SHIFT - PAGE_SHIFT);
+--- a/drivers/media/video/exynos/fimc-is/fimc-is-clk-gate.c
++++ b/drivers/media/video/exynos/fimc-is/fimc-is-clk-gate.c
+@@ -83,7 +83,7 @@ int fimc_is_wrap_clk_gate_set(struct fimc_is_core *core,
+ 	return 0;
+ }
+ 
+-inline bool fimc_is_group_otf(struct fimc_is_device_ischain *device, int group_id)
++static inline bool fimc_is_group_otf(struct fimc_is_device_ischain *device, int group_id)
+ {
+ 	struct fimc_is_group *group;
+ 
+--- a/drivers/media/video/exynos/mfc/s5p_mfc.c
++++ b/drivers/media/video/exynos/mfc/s5p_mfc.c
+@@ -373,7 +373,7 @@ void mfc_sched_worker(struct work_struct *work)
+ 
+ /* Helper functions for interrupt processing */
+ /* Remove from hw execution round robin */
+-inline void clear_work_bit(struct s5p_mfc_ctx *ctx)
++static inline void clear_work_bit(struct s5p_mfc_ctx *ctx)
+ {
+ 	struct s5p_mfc_dev *dev = NULL;
+ 

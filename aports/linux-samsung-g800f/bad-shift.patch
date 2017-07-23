@@ -1,0 +1,20 @@
+This fixes the following error:
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/media/video/exynos/mfc/s5p_mfc_enc.c:1082:17: error: result of '2 << 31' requires 34 bits to represent, but 'int' only has 32 bits [-Werror=shift-overflow=]
+   .maximum = (2 << 31) - 1,
+                 ^~
+cc1: all warnings being treated as errors
+
+The maximum field is defined as __s32.
+
+--- a/drivers/media/video/exynos/mfc/s5p_mfc_enc.c
++++ b/drivers/media/video/exynos/mfc/s5p_mfc_enc.c
+@@ -1079,7 +1079,7 @@ static struct v4l2_queryctrl controls[] = {
+ 		.type = V4L2_CTRL_TYPE_INTEGER,
+ 		.name = "Get extra buffer size",
+ 		.minimum = 0,
+-		.maximum = (2 << 31) - 1,
++		.maximum = (__s32)(((__s64)2 << 31) - 1),
+ 		.step = 1,
+ 		.default_value = 0,
+ 	},

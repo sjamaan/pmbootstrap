@@ -1,0 +1,25 @@
+This fixes:
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/net/wireless/bcmdhd/siutils.c: In function 'si_doattach':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/net/wireless/bcmdhd/siutils.c:425:14: error: self-comparison always evaluates to false [-Werror=tautological-compare]
+  if (bustype != BUSTYPE(bustype)) {
+              ^~
+cc1: all warnings being treated as errors
+
+
+--- a/drivers/net/wireless/bcmdhd/siutils.c
++++ b/drivers/net/wireless/bcmdhd/siutils.c
+@@ -422,11 +422,13 @@ si_doattach(si_info_t *sii, uint devid, osl_t *osh, void *regs,
+ 	}
+ 
+ 	sih->bustype = bustype;
++/*
+ 	if (bustype != BUSTYPE(bustype)) {
+ 		SI_ERROR(("si_doattach: bus type %d does not match configured bus type %d\n",
+ 			bustype, BUSTYPE(bustype)));
+ 		return NULL;
+ 	}
++*/
+ 
+ 	/* bus/core/clk setup for register access */
+ 	if (!si_buscore_prep(sii, bustype, devid, sdh)) {

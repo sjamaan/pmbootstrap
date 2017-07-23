@@ -1,0 +1,115 @@
+# Based on linux-samsung-i9100
+# Using defconfig https://github.com/cm-3470/android_kernel_samsung_kminilte/blob/cm-14.1/arch/arm/configs/kminilte_00_defconfig
+
+_vendor=samsung
+_flavor=samsung-g800f
+_hash="b88d95306156158d5bc0da78550ad30fdf37eddd"
+_config="config-${_flavor}.armhf"
+
+pkgname=linux-${_flavor}
+pkgver=3.4.39
+case $pkgver in
+	*.*.*)  _kernver=${pkgver%.*};;
+	*.*) _kernver=$pkgver;;
+esac
+pkgrel=1
+arch="armhf"
+pkgdesc="Samsung Galaxy S5 kernel from unofficial LineageOS"
+url="https://github.com/cm-3470/android_kernel_samsung_kminilte"
+depends="postmarketos-mkinitfs"
+makedepends="perl sed installkernel bash gmp-dev bc linux-headers elfutils-dev
+findutils busybox-static-armhf"
+options="!strip !check !tracedeps"
+install=
+source="
+	$pkgname-$_hash.zip::${url}/archive/${_hash}.zip
+	$_config
+	compiler-gcc6.h
+	bad-return.patch
+	bad-shift.patch
+	harmless-misleading-indent.patch
+	unknown-misleading-indent.patch
+	unused-definitions.patch
+	self-comparison.patch
+	static-inline-functions.patch
+	uninitialized-uses.patch
+"
+subpackages=""
+license="GPL2"
+
+_abi_release=${pkgver}
+_carch="arm"
+HOSTCC="${CC:-gcc}"
+HOSTCC="${HOSTCC#${CROSS_COMPILE}}"
+
+ksrcdir="$srcdir/android_kernel_samsung_kminilte-${_hash}"
+
+prepare() {
+	local _patch_failed=
+	cd "$ksrcdir"
+
+	# first apply patches in specified order
+	for i in $source; do
+		case $i in
+		*.patch)
+			msg "Applying $i..."
+			if ! patch -s -p1 -N -i "$srcdir"/$i; then
+				echo $i >>failed
+				_patch_failed=1
+			fi
+			;;
+		esac
+	done
+
+	if ! [ -z "$_patch_failed" ]; then
+		error "The following patches failed:"
+		cat failed
+		return 1
+	fi
+
+	# gcc6 support
+	cp -v "$srcdir/compiler-gcc6.h" "$ksrcdir/include/linux/"
+
+	mkdir -p "$srcdir"/build
+	cp "$srcdir"/$_config "$srcdir"/build/.config || return 1
+	make -C "$ksrcdir" O="$srcdir"/build ARCH="$_carch" HOSTCC="$HOSTCC" \
+		silentoldconfig
+}
+
+
+# this is so we can do: 'abuild menuconfig' to reconfigure kernel
+menuconfig() {
+	cd "$srcdir"/build || return 1
+	make ARCH="$_carch" menuconfig
+	cp .config "$startdir"/$_config
+}
+
+build() {
+	cd "$srcdir"/build
+	unset LDFLAGS
+
+	make ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-Alpine" \
+		|| return 1
+}
+
+package() {
+	echo "--[ Installing kernel ]--"
+	install -Dm644 "$srcdir/build/arch/arm/boot/zImage" \
+		"$pkgdir/boot/vmlinuz-$_flavor"
+
+	install -D "$srcdir/build/include/config/kernel.release" \
+		"$pkgdir/usr/share/kernel/$_flavor/kernel.release"
+}
+
+sha512sums="c14a1ef523e98ca09f2717267b2d0cc11c8fb549d51f1755557c34ffc596d9bfdab2e146f834f18c81cecb0ac7f36e29342de1b35c3b0297b4454058537620ff  linux-samsung-g800f-b88d95306156158d5bc0da78550ad30fdf37eddd.zip
+661b228a0e41375be3d4798fba8f3d2ec99ba2072cc8d0b9158e8bd9e37ac22ef68f6ed88c2e0e76abd0f1437f7fe82dc4d068b04bcd00d4050e2f34e244c430  config-samsung-g800f.armhf
+d80980e9474c82ba0ef1a6903b434d8bd1b092c40367ba543e72d2c119301c8b2d05265740e4104ca1ac5d15f6c4aa49e8776cb44264a9a28dc551e0d1850dcc  compiler-gcc6.h
+6721fa72abae7ed5a0d89a37800be6cfcd1975915db56486b3e912a16bc348c59e3636477cbaee274fe0a42df45f8d8f1a4d575d16d34d0fbc8b58fff16e78a7  bad-return.patch
+401be8cd506a221f3d8bbc9c56c2b4229c8e30eddfce3f1cb17f75c761348a608f7e6c6e20c655e043ffff32fb0acbf508bb9b62d6f0c8072d6313bbfdf2aef7  bad-shift.patch
+a32fcfdf203a53b8ee396fd981cfeedfe136f8ae2b06486b226b35f05e4d47dd43eefedc2a5250f7de897f4a87a66d9c556e7af2858b8590f92c7b72718f486b  harmless-misleading-indent.patch
+42491fa8e63a2fe8eb8a6fc07b1808a9b731831ed0f91a3329a860988b8114d672bb3f220a438a38727f5c9b5b32ae1353f2804b3c6c04cf1955c5eb653298d7  unknown-misleading-indent.patch
+1b8538669cfa260818fde6f4139b8c8e1063b301402acee237bbd619679819ffe82e57febabcfe2ba3b5cbec71f9d3199ca79f8cdb5759e8dbda3afb603242e2  unused-definitions.patch
+6bc63e9f0bf3925761312eb18b836b8debe5f781c9cb6680bcb6c0c05fddf90bc6c237737cabb6feb74edf095b9e93ab7c0162964613f68bf9e4e469cf2983b0  self-comparison.patch
+4b8f1796697735af72c6a76966dd1e43d2a5dc6fc03e836e846ae33ae98efa111ee7fb45b1c1a9115e1c250b7ab5ba37f1bdec243573fa8b08c9fede98b4927f  static-inline-functions.patch
+d0f3275e0c29f1049801d5ef66764e0a9be475800c2735cb13a9de21497adaf0eb90575ff5580de898712cb798f840809d98a2fc2bfcae67073e9bed0c4a7aae  uninitialized-uses.patch"

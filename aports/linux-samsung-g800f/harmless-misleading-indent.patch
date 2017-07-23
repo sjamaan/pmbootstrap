@@ -1,0 +1,51 @@
+This fixes
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/md/dm-crypt.c: In function 'crypt_dec_pending':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/md/dm-crypt.c:891:2: error: this 'if' clause does not guard... [-Werror=misleading-indentation]
+  if (!atomic_dec_and_test(&io->pending))
+  ^~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/md/dm-crypt.c:894:3: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'if'
+   if (io->ctx.req)
+   ^~
+cc1: all warnings being treated as errors
+
+And
+
+In file included from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/android.c:168:0:
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/u_ether.c: In function 'alloc_tx_buffer':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/u_ether.c:819:3: error: this 'if' clause does not guard... [-Werror=misleading-indentation]
+   if (!req->buf)
+   ^~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/u_ether.c:822:4: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'if'
+    if (!req->buf)
+    ^~
+In file included from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/android.c:170:0:
+
+
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -891,7 +891,7 @@ static void crypt_dec_pending(struct dm_crypt_io *io)
+ 	if (!atomic_dec_and_test(&io->pending))
+ 		return;
+ 
+-		if (io->ctx.req)
++	if (io->ctx.req)
+ 		mempool_free(io->ctx.req, cc->req_pool);
+ 	mempool_free(io, cc->io_pool);
+ 
+--- a/drivers/usb/gadget/u_ether.c
++++ b/drivers/usb/gadget/u_ether.c
+@@ -816,11 +816,12 @@ static int alloc_tx_buffer(struct eth_dev *dev)
+ 
+ 	list_for_each(act, &dev->tx_reqs) {
+ 		req = container_of(act, struct usb_request, list);
+-		if (!req->buf)
++		if (!req->buf) {
+ 			req->buf = kmalloc(dev->tx_req_bufsize,
+ 						GFP_ATOMIC);
+ 			if (!req->buf)
+ 				goto free_buf;
++		}
+ 	}
+ 	return 0;
+ 

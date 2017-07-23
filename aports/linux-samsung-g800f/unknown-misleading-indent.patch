@@ -1,0 +1,186 @@
+This "fixes" the following errors:
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mfd/wm8994-core.c: In function 'wm8994_device_init':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mfd/wm8994-core.c:574:3: error: this 'if' clause does not guard... [-Werror=misleading-indentation]
+   if (wm8994->revision > 1)
+   ^~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mfd/wm8994-core.c:576:4: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'if'
+    regmap_patch = wm1811_reva_patch;
+    ^~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mfd/rt5033_core.c: In function 'rt5033_mfd_probe':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mfd/rt5033_core.c:429:5: error: this 'if' clause does not guard... [-Werror=misleading-indentation]
+     if (pdata->irq_base < 0)
+     ^~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mfd/rt5033_core.c:431:2: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'if'
+  if (pdata->irq_base < 0) {
+  ^~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mmc/card/block.c: In function 'mmc_blk_get_sg':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mmc/card/block.c:396:3: error: this 'else' clause does not guard... [-Werror=misleading-indentation]
+   else
+   ^~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mmc/card/block.c:398:4: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'else'
+    sg_set_page(sg, virt_to_page(buf), sec_cnt, offset_in_page(buf));
+    ^~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/net/wireless/bcmdhd/dhd_sdio.c: In function 'dhd_bus_devreset':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/net/wireless/bcmdhd/dhd_sdio.c:8728:6: error: this 'else' clause does not guard... [-Werror=misleading-indentation]
+    } else
+      ^~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/net/wireless/bcmdhd/dhd_sdio.c:8731:5: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'else'
+     dhd_os_sdunlock(dhdp);
+     ^~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+
+In file included from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/android.c:170:0:
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/f_conn_gadget.c: In function 'conn_gadget_cleanup':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/f_conn_gadget.c:1210:5: error: this 'if' clause does not guard... [-Werror=misleading-indentation]
+     if (_conn_gadget_dev->rd_queue_buf)
+     ^~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/f_conn_gadget.c:1213:2: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'if'
+  kfree(_conn_gadget_dev);
+  ^~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/net/packet/af_packet.c: In function 'packet_set_ring':
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/net/packet/af_packet.c:3668:4: error: this 'if' clause does not guard... [-Werror=misleading-indentation]
+    if (!tx_ring)
+    ^~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/net/packet/af_packet.c:3670:5: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'if'
+     break;
+     ^~~~~
+cc1: all warnings being treated as errors
+
+
+
+It is completely unclear what these bits of code are trying to do, so
+I've decided to just add braces, but stick with what the code is
+actually doing.
+
+--- a/drivers/mfd/wm8994-core.c
++++ b/drivers/mfd/wm8994-core.c
+@@ -571,11 +571,12 @@ static __devinit int wm8994_device_init(struct wm8994 *wm8994, int irq)
+ 
+ 	case WM1811:
+ 		/* Revision C did not change the relevant layer */
+-		if (wm8994->revision > 1)
++		if (wm8994->revision > 1) {
+ 			wm8994->revision++;
+-			regmap_patch = wm1811_reva_patch;
+-			patch_regs = ARRAY_SIZE(wm1811_reva_patch);
+-			break;
++		}
++		regmap_patch = wm1811_reva_patch;
++		patch_regs = ARRAY_SIZE(wm1811_reva_patch);
++		break;
+ 
+ 	default:
+ 		break;
+--- a/drivers/mfd/rt5033_core.c
++++ b/drivers/mfd/rt5033_core.c
+@@ -426,8 +426,9 @@ static int rt5033_mfd_probe(struct i2c_client *i2c,
+     /* if board-init had already assigned irq_base (>=0) ,
+     no need to allocate it;
+     assign -1 to let this driver allocate resource by itself*/
+-    if (pdata->irq_base < 0)
++    if (pdata->irq_base < 0) {
+         pdata->irq_base = irq_alloc_descs(-1, 0, RT5033_IRQS_NR, 0);
++    }
+ 	if (pdata->irq_base < 0) {
+ 		pr_err("%s:%s irq_alloc_descs Fail! ret(%d)\n",
+ 				"rt5033-mfd", __func__, pdata->irq_base);
+--- a/drivers/mmc/card/block.c
++++ b/drivers/mmc/card/block.c
+@@ -395,12 +395,12 @@ struct scatterlist *mmc_blk_get_sg(struct mmc_card *card,
+ 			sec_cnt = total_sec_cnt;
+ 		else
+ 			sec_cnt = max_seg_size;
+-			sg_set_page(sg, virt_to_page(buf), sec_cnt, offset_in_page(buf));
+-			buf = buf + sec_cnt;
+-			total_sec_cnt = total_sec_cnt - sec_cnt;
+-			if (total_sec_cnt == 0)
+-				break;
+-			sg = sg_next(sg);
++		sg_set_page(sg, virt_to_page(buf), sec_cnt, offset_in_page(buf));
++		buf = buf + sec_cnt;
++		total_sec_cnt = total_sec_cnt - sec_cnt;
++		if (total_sec_cnt == 0)
++			break;
++		sg = sg_next(sg);
+ 	}
+ 
+ 	if (sg)
+--- a/drivers/net/wireless/bcmdhd/dhd_sdio.c
++++ b/drivers/net/wireless/bcmdhd/dhd_sdio.c
+@@ -8677,8 +8677,9 @@ dhd_bus_devreset(dhd_pub_t *dhdp, uint8 flag)
+ 
+ 			DHD_TRACE(("%s:  WLAN OFF DONE\n", __FUNCTION__));
+ 			/* App can now remove power from device */
+-		} else
++		} else {
+ 			bcmerror = BCME_SDIO_ERROR;
++		}
+ 	} else {
+ 		/* App must have restored power to device before calling */
+ 
+@@ -8723,10 +8724,12 @@ dhd_bus_devreset(dhd_pub_t *dhdp, uint8 flag)
+ 						dhdsdio_release_dongle(bus, bus->dhd->osh,
+ 							TRUE, FALSE);
+ 					}
+-				} else
++				} else {
+ 					bcmerror = BCME_SDIO_ERROR;
+-			} else
++				}
++			} else {
+ 				bcmerror = BCME_SDIO_ERROR;
++			}
+ 
+ 				dhd_os_sdunlock(dhdp);
+ 		} else {
+--- a/drivers/usb/gadget/f_conn_gadget.c
++++ b/drivers/usb/gadget/f_conn_gadget.c
+@@ -1207,8 +1207,9 @@ static void conn_gadget_cleanup(void)
+ 
+ 	misc_deregister(&conn_gadget_device);
+ 
+-    if (_conn_gadget_dev->rd_queue_buf)
++    if (_conn_gadget_dev->rd_queue_buf) {
+         vfree(_conn_gadget_dev->rd_queue_buf);
++    }
+ 
+ 	kfree(_conn_gadget_dev);
+ 	_conn_gadget_dev = NULL;
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3665,8 +3665,9 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
+ 		/* Transmit path is not supported. We checked
+ 		 * it above but just being paranoid
+ 		 */
+-			if (!tx_ring)
++			if (!tx_ring) {
+ 				init_prb_bdqc(po, rb, pg_vec, req_u, tx_ring);
++			}
+ 				break;
+ 		default:
+ 			break;

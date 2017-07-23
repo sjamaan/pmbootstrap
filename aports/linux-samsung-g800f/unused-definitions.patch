@@ -1,0 +1,256 @@
+This fixes the warning/error:
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/mfd/rt5033_irq.c:80:17: error: 'rt5033_mask_reg' defined but not used [-Werror=unused-const-variable=]
+ static const u8 rt5033_mask_reg[] = {
+                 ^~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/net/usb/usbnet.c:87:19: error: 'driver_name' defined but not used [-Werror=unused-const-variable=]
+ static const char driver_name [] = "usbnet";
+                   ^~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/regulator/s2mpu01a.c:67:43: error: 'buck_voltage_val3' defined but not used [-Werror=unused-const-variable=]
+ static const struct s2mpu01a_voltage_desc buck_voltage_val3 = {
+                                           ^~~~~~~~~~~~~~~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/regulator/s2mpu01a.c:61:43: error: 'buck_voltage_val2' defined but not used [-Werror=unused-const-variable=]
+ static const struct s2mpu01a_voltage_desc buck_voltage_val2 = {
+                                           ^~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/drivers/usb/gadget/s3c_udc_otg.c:107:19: error: 'driver_desc' defined but not used [-Werror=unused-const-variable=]
+ static const char driver_desc[] = DRIVER_DESC;
+                   ^~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/sound/soc/codecs/wm8994.c:721:38: error: 'wm1811_snd_controls' defined but not used [-Werror=unused-const-variable=]
+ static const struct snd_kcontrol_new wm1811_snd_controls[] = {
+                                      ^~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+In file included from /home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/sound/soc/codecs/wm8994.c:30:0:
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/sound/soc/codecs/wm8994.c:288:35: error: 'mixin_boost_tlv' defined but not used [-Werror=unused-const-variable=]
+ static const DECLARE_TLV_DB_SCALE(mixin_boost_tlv, 0, 900, 0);
+                                   ^
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/include/sound/tlv.h:47:15: note: in definition of macro 'DECLARE_TLV_DB_SCALE'
+  unsigned int name[] = { TLV_DB_SCALE_ITEM(min, step, mute) }
+               ^~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/net/core/rtnetlink.c:1146:32: error: 'ifla_vf_policy' defined but not used [-Werror=unused-const-variable=]
+ static const struct nla_policy ifla_vf_policy[IFLA_VF_MAX+1] = {
+                                ^~~~~~~~~~~~~~
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/net/core/rtnetlink.c:1142:32: error: 'ifla_vfinfo_policy' defined but not used [-Werror=unused-const-variable=]
+ static const struct nla_policy ifla_vfinfo_policy[IFLA_VF_INFO_MAX+1] = {
+                                ^~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/net/ipv4/arp.c:151:31: error: 'arp_broken_ops' defined but not used [-Werror=unused-const-variable=]
+ static const struct neigh_ops arp_broken_ops = {
+                               ^~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/sound/soc/samsung/universal222ap_wm1811.c:166:30: error: 'sub_bias_mode_enum' defined but not used [-Werror=unused-const-variable=]
+ static const struct soc_enum sub_bias_mode_enum[] = {
+                              ^~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/net/core/rtnetlink.c:1142:32: error: 'ifla_vfinfo_policy' defined but not used [-Werror=unused-const-variable=]
+ static const struct nla_policy ifla_vfinfo_policy[IFLA_VF_INFO_MAX+1] = {
+                                ^~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+And
+
+/home/user/build/src/android_kernel_samsung_kminilte-b88d95306156158d5bc0da78550ad30fdf37eddd/net/core/net-sysfs
+.c:31:19: error: 'fmt_long_hex' defined but not used [-Werror=unused-const-variable=]
+ static const char fmt_long_hex[] = "%#lx\n";
+                   ^~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+--- a/drivers/mfd/rt5033_irq.c
++++ b/drivers/mfd/rt5033_irq.c
+@@ -77,14 +77,6 @@ struct rt5033_irq_data {
+ 	int offset;
+ };
+ 
+-static const u8 rt5033_mask_reg[] = {
+-	RT5033_CHG_IRQ1_CTRL,
+-	RT5033_CHG_IRQ2_CTRL,
+-	RT5033_CHG_IRQ3_CTRL,
+-	RT5033_LED_IRQ_CTRL,
+-	RT5033_PMIC_IRQ_CTRL,
+-};
+-
+ #define DECLARE_IRQ_CTRL(idx, _offset, _mask)		\
+ 	[(idx)] = { .offset = (_offset), .mask = (_mask) }
+ 
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -84,8 +84,6 @@
+ // randomly generated ethernet address
+ static u8	node_id [ETH_ALEN];
+ 
+-static const char driver_name [] = "usbnet";
+-
+ /* use ethtool to change the level for any given device */
+ static int msg_level = -1;
+ module_param (msg_level, int, 0);
+--- a/drivers/regulator/s2mpu01a.c
++++ b/drivers/regulator/s2mpu01a.c
+@@ -58,18 +58,6 @@ static const struct s2mpu01a_voltage_desc buck_voltage_val1 = {
+ 	.step =   6250,
+ };
+ 
+-static const struct s2mpu01a_voltage_desc buck_voltage_val2 = {
+-	.max = 1500000,
+-	.min =  800000,
+-	.step =   6250,
+-};
+-
+-static const struct s2mpu01a_voltage_desc buck_voltage_val3 = {
+-	.max = 2300000,
+-	.min =  1500000,
+-	.step =   12500,
+-};
+-
+ static const struct s2mpu01a_voltage_desc buck_voltage_val4 = {
+ 	.max = 3550000,
+ 	.min =  750000,
+--- a/drivers/usb/gadget/s3c_udc_otg.c
++++ b/drivers/usb/gadget/s3c_udc_otg.c
+@@ -104,7 +104,6 @@ static char *state_names[] = {
+ struct s3c_udc	*the_controller;
+ 
+ static const char driver_name[] = "s3c-hsotg";
+-static const char driver_desc[] = DRIVER_DESC;
+ static const char ep0name[] = "ep0-control";
+ 
+ /* Max packet size*/
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -718,13 +718,6 @@ SOC_SINGLE_TLV("AIF2DAC Noise Gate Threshold Volume",
+ 	       7, 1, ng_tlv),
+ };
+ 
+-static const struct snd_kcontrol_new wm1811_snd_controls[] = {
+-SOC_SINGLE_TLV("MIXINL IN1LP Boost Volume", WM8994_INPUT_MIXER_1, 7, 1, 0,
+-	       mixin_boost_tlv),
+-SOC_SINGLE_TLV("MIXINL IN1RP Boost Volume", WM8994_INPUT_MIXER_1, 8, 1, 0,
+-	       mixin_boost_tlv),
+-};
+-
+ /* We run all mode setting through a function to enforce audio mode */
+ static void wm1811_jackdet_set_mode(struct snd_soc_codec *codec, u16 mode)
+ {
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -1139,10 +1139,6 @@ static const struct nla_policy ifla_info_policy[IFLA_INFO_MAX+1] = {
+ 	[IFLA_INFO_DATA]	= { .type = NLA_NESTED },
+ };
+ 
+-static const struct nla_policy ifla_vfinfo_policy[IFLA_VF_INFO_MAX+1] = {
+-	[IFLA_VF_INFO]		= { .type = NLA_NESTED },
+-};
+-
+ static const struct nla_policy ifla_vf_policy[IFLA_VF_MAX+1] = {
+ 	[IFLA_VF_MAC]		= { .type = NLA_BINARY,
+ 				    .len = sizeof(struct ifla_vf_mac) },
+@@ -1143,17 +1143,6 @@ static const struct nla_policy ifla_vfinfo_policy[IFLA_VF_INFO_MAX+1] = {
+ 	[IFLA_VF_INFO]		= { .type = NLA_NESTED },
+ };
+ 
+-static const struct nla_policy ifla_vf_policy[IFLA_VF_MAX+1] = {
+-	[IFLA_VF_MAC]		= { .type = NLA_BINARY,
+-				    .len = sizeof(struct ifla_vf_mac) },
+-	[IFLA_VF_VLAN]		= { .type = NLA_BINARY,
+-				    .len = sizeof(struct ifla_vf_vlan) },
+-	[IFLA_VF_TX_RATE]	= { .type = NLA_BINARY,
+-				    .len = sizeof(struct ifla_vf_tx_rate) },
+-	[IFLA_VF_SPOOFCHK]	= { .type = NLA_BINARY,
+-				    .len = sizeof(struct ifla_vf_spoofchk) },
+-};
+-
+ static const struct nla_policy ifla_port_policy[IFLA_PORT_MAX+1] = {
+ 	[IFLA_PORT_VF]		= { .type = NLA_U32 },
+ 	[IFLA_PORT_PROFILE]	= { .type = NLA_STRING,
+--- a/net/ipv4/arp.c
++++ b/net/ipv4/arp.c
+@@ -148,14 +148,6 @@ static const struct neigh_ops arp_direct_ops = {
+ 	.connected_output =	neigh_direct_output,
+ };
+ 
+-static const struct neigh_ops arp_broken_ops = {
+-	.family =		AF_INET,
+-	.solicit =		arp_solicit,
+-	.error_report =		arp_error_report,
+-	.output =		neigh_compat_output,
+-	.connected_output =	neigh_compat_output,
+-};
+-
+ struct neigh_table arp_tbl = {
+ 	.family		= AF_INET,
+ 	.key_len	= 4,
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -285,7 +285,6 @@ static const DECLARE_TLV_DB_SCALE(st_tlv, -3600, 300, 0);
+ static const DECLARE_TLV_DB_SCALE(wm8994_3d_tlv, -1600, 183, 0);
+ static const DECLARE_TLV_DB_SCALE(eq_tlv, -1200, 100, 0);
+ static const DECLARE_TLV_DB_SCALE(ng_tlv, -10200, 600, 0);
+-static const DECLARE_TLV_DB_SCALE(mixin_boost_tlv, 0, 900, 0);
+ 
+ #define WM8994_DRC_SWITCH(xname, reg, shift) \
+ {	.iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname, \
+--- a/sound/soc/samsung/universal222ap_wm1811.c
++++ b/sound/soc/samsung/universal222ap_wm1811.c
+@@ -163,10 +163,6 @@ static const struct soc_enum mic_bias_mode_enum[] = {
+ 	SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(mic_bias_mode_text), mic_bias_mode_text),
+ };
+ 
+-static const struct soc_enum sub_bias_mode_enum[] = {
+-	SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(mic_bias_mode_text), mic_bias_mode_text),
+-};
+-
+ static int get_aif2_mode(struct snd_kcontrol *kcontrol,
+ 	struct snd_ctl_elem_value *ucontrol)
+ {
+--- a/net/core/net-sysfs.c
++++ b/net/core/net-sysfs.c
+@@ -28,7 +28,6 @@
+ 
+ #ifdef CONFIG_SYSFS
+ static const char fmt_hex[] = "%#x\n";
+-static const char fmt_long_hex[] = "%#lx\n";
+ static const char fmt_dec[] = "%d\n";
+ static const char fmt_udec[] = "%u\n";
+ static const char fmt_ulong[] = "%lu\n";
