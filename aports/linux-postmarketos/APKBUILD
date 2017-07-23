@@ -93,7 +93,7 @@ package() {
 	cd "$srcdir/build/arch/arm/boot"
 	
 	install -Dm644 "$srcdir/build/arch/arm/boot/zImage" \
-		"$pkgdir/boot/zImage-$_flavor"
+		"$pkgdir/boot/vmlinuz-$_flavor"
 
 	mkdir -p "$pkgdir/usr/share/dtb/"
 	cp -v "$srcdir/build/arch/arm/boot/dts"/*.dtb "$pkgdir/usr/share/dtb/"

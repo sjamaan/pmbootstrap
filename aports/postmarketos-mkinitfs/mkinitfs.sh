@@ -140,8 +140,9 @@ create_uboot_files()
 	[ "${deviceinfo_generate_legacy_uboot_initfs}" == "true" ] || return
 	echo "==> initramfs: creating uInitrd"
 	mkimage -A arm -T ramdisk -C none -n uInitrd -d "$outfile" "${outfile/initramfs-/uInitrd-}"
+
 	echo "==> kernel: creating uImage"
-	kernelfile="${outfile/initramfs-vmlinuz-}"
+	kernelfile="${outfile/initramfs-/vmlinuz-}"
 	if [ -n "${deviceinfo_dtb}" ]; then
 		kernelfile="${kernelfile}-dtb"
 	fi
@@ -156,7 +157,7 @@ create_bootimg()
 	_base="${deviceinfo_flash_offset_base}"
 	[ -z "$_base" ] && _base="0x10000000"
 
-	kernelfile="${outfile/initramfs-vmlinuz-}"
+	kernelfile="${outfile/initramfs-/vmlinuz-}"
 	if [ -n "${deviceinfo_dtb}" ]; then
 		kernelfile="${kernelfile}-dtb"
 	fi
@@ -192,7 +193,7 @@ generate_splash_screens()
 # Append the correct device tree to the linux image file
 append_device_tree()
 {
-	[ -z "${deviceinfo_dtb}" ] || return
+	[ -n "${deviceinfo_dtb}" ] || return
 	dtb="/usr/share/dtb/${deviceinfo_dtb}.dtb"
 	kernel="${outfile/initramfs-/vmlinuz-}"
 	echo "==> kernel: appending device-tree ${deviceinfo_dtb}"
