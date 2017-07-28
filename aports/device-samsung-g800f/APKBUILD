@@ -9,7 +9,7 @@ depends="linux-samsung-g800f"
 makedepends=""
 install=""
 subpackages=""
-source="deviceinfo 90-android.rules"
+source="deviceinfo initfs-hook.sh 90-android.rules"
 options="!check"
 
 build() {
@@ -19,9 +19,12 @@ build() {
 package() {
 	install -D -m644 "$srcdir/deviceinfo" \
 		"$pkgdir/etc/deviceinfo"
+	install -D -m644 "$srcdir"/initfs-hook.sh \
+		"$pkgdir"/etc/postmarketos-mkinitfs/hooks/00-${pkgname}.sh
 	install -D -m644 "$srcdir"/90-android.rules \
 		"$pkgdir"/etc/udev/rules.d/90-android.rules
 }
 
-sha512sums="11523208c5155de7b2cfded1d9762d93c4c509f74eef768d15dfa5966322c399395a3956f8c016a2786146602cfc87f169ce6e9cd644b6b7e43448f677f117d3  deviceinfo
+sha512sums="fd5a34bcf6cac4387b4eb322dc73884f0d0aa34ca2eb5ae3240df38f178381ad2a409aa51299e58e1531ca8b3c3081ae75720bfb0d03d05af103722622a1ae16  deviceinfo
+a2fe333ec9536f2e0784436563e25c693e2a84a75dd287f23b7e08491f8093930a167165d48f9be27bf0e01cdd4f2b198348211298fed71c3006179421cbcffa  initfs-hook.sh
 8aead706ddb118a44de7d049f07d10a27e727d17724058d132e4ec4fa73fed29c9ccfe03f02aca459c922ec0fbba24e171fe3c76e33f7c5462631e3dd5506e36  90-android.rules"
