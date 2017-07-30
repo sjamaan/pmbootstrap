@@ -5,7 +5,7 @@ pkgdesc="Samsung Galaxy S5 mini"
 url="https://github.com/postmarketOS"
 arch="noarch"
 license="MIT"
-depends="linux-samsung-g800f"
+depends="linux-samsung-g800f mkbootimg"
 makedepends=""
 install=""
 subpackages=""
@@ -25,6 +25,6 @@ package() {
 		"$pkgdir"/etc/udev/rules.d/90-android.rules
 }
 
-sha512sums="fd5a34bcf6cac4387b4eb322dc73884f0d0aa34ca2eb5ae3240df38f178381ad2a409aa51299e58e1531ca8b3c3081ae75720bfb0d03d05af103722622a1ae16  deviceinfo
+sha512sums="a626f457b37daf26677f4e6b8c03a48d02de1f16cc7df32e81b7821ef1bfdcff91b06a0b205bfde8955faa2d530886ba12e53be7e84b4df59f282b547258e8f5  deviceinfo
 a2fe333ec9536f2e0784436563e25c693e2a84a75dd287f23b7e08491f8093930a167165d48f9be27bf0e01cdd4f2b198348211298fed71c3006179421cbcffa  initfs-hook.sh
 8aead706ddb118a44de7d049f07d10a27e727d17724058d132e4ec4fa73fed29c9ccfe03f02aca459c922ec0fbba24e171fe3c76e33f7c5462631e3dd5506e36  90-android.rules"
